@@ -43,6 +43,54 @@ versus 0% for a random guesser, and every generated sequence is novel rather
 than a copy of something it memorized. Small task, honest number, no wet lab
 required.
 
+**Update:** that "0% for a random guesser" isn't a random guesser. It's a
+deterministic formula, `ALPHABET[(pos * 7) % len(ALPHABET)]`, hand-picked
+to never match the true motif letter at any of the 5 planted positions.
+A genuine uniform-random guess over the 20-letter alphabet scores ~5%,
+matching the theoretical 1/20 rate almost exactly. The 91.5% guided score
+is real and untouched; only the comparison baseline was rigged.
+`python -m proteinmask.eval_v2` runs the honest comparison. Details
+below.
+
+## The "random" baseline was never random
+
+`design.motif_recovery`'s baseline computes
+`ALPHABET[(pos * 7) % len(ALPHABET)]`, a fixed letter derived from the
+position index, and calls it a random guesser. It isn't random; it's a
+formula. Checked directly against the 5 planted motif positions:
+
+```
+pos=2  motif=G  formula picks R
+pos=5  motif=L  formula picks S
+pos=9  motif=D  formula picks E
+pos=14 motif=K  formula picks W
+pos=19 motif=Y  formula picks Q
+```
+
+Never once a match, by design, which is exactly why the published
+benchmark shows `random_motif_recovery 0.000`. A real random process
+doesn't reliably produce zero: over a 20-letter alphabet, a uniform guess
+lands on the true letter about 1/20 = 5% of the time.
+
+```bash
+python -m proteinmask.eval_v2
+```
+```
+seeds        n    guided   fake random   real random
+tuning      20     0.915         0.000         0.054
+holdout     15     0.915         0.000         0.052
+```
+
+`design_v2.py`'s `motif_recovery_v2` replaces the formula with an actual
+`random.Random` draw from the full alphabet. Both the tuning sweep and a
+disjoint 15-seed holdout land right on the theoretical 5% rate, as they
+should. The guided score itself needed no fix: it's exactly the same
+91.5% either way, and it's not circular either, it tracks the true
+fraction of held-out sequences that actually carry the fixed motif letter
+at each position, which is the correct thing for a profile model to
+learn. `design.py`/`family.py` are untouched, and the published numbers
+above still reproduce exactly; `motif_recovery_v2` is opt-in.
+
 ## Research trail
 
 - ESM3, 2024: https://www.science.org/doi/10.1126/science.ads0018

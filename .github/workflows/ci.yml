@@ -28,3 +28,5 @@ jobs:
         run: python examples/quickstart.py
       - name: Run benchmark
         run: python -m proteinmask.benchmark
+      - name: Run real-random-baseline comparison
+        run: python -m proteinmask.eval_v2
