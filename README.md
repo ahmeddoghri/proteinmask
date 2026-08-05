@@ -2,7 +2,6 @@
 
 Generative biology demos love to imply they are one commit away from curing something. proteinmask is a toy, says so loudly, and still manages to learn something real.
 
-![CI](https://github.com/ahmeddoghri/proteinmask/actions/workflows/ci.yml/badge.svg)
 ![python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![deps](https://img.shields.io/badge/runtime%20deps-none-success)
 ![license](https://img.shields.io/badge/license-MIT-black)
