@@ -2,9 +2,13 @@
 
 Generative biology demos love to imply they are one commit away from curing something. proteinmask is a toy, says so loudly, and still manages to learn something real.
 
+[![tests](https://github.com/ahmeddoghri/proteinmask/actions/workflows/tests.yml/badge.svg)](https://github.com/ahmeddoghri/proteinmask/actions/workflows/tests.yml)
 ![python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![deps](https://img.shields.io/badge/runtime%20deps-none-success)
 ![license](https://img.shields.io/badge/license-MIT-black)
+[![case study](https://img.shields.io/badge/case%20study-adoghri.com-e0703e)](https://adoghri.com/project-30.html)
+
+![proteinmask](docs/cover.jpg)
 
 This does not design real proteins, and anyone telling you their weekend
 side project does should be met with polite skepticism. What proteinmask
